@@ -6,6 +6,7 @@ export class apiScript {
         this.weatherData = {};
 
         this.fetchData('cape town')
+        this.getWeatherData();
     }
 
     async fetchData (location) {
@@ -27,5 +28,28 @@ export class apiScript {
     // Then create smaller methods that pull a specific data point from that object.
     async getWeatherData () {
         const data = await this.fetchData(this.location);
+        // Destructure json into data. Destructure data points into CurrentConditions
+        // Build new object with empty constructor object
+        const { address: location, currentConditions } = data;
+        
+        const {
+            temp,
+            feelslike,
+            humidity,
+            conditions,
+            windspeed: wind,
+        } = currentConditions;
+
+        this.weatherData = {
+            location,
+            temp,
+            feelslike,
+            wind,
+            humidity,
+            conditions
+        };
+        console.log(this.weatherData);
+        return this.weatherData;
+        
     }
 }
