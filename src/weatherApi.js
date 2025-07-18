@@ -2,7 +2,7 @@ export class apiScript {
     constructor () {
         this.apiKey  = '6SZ6Y2GHCYFLUKC6VLHMLFPDS';
         this.baseUrl = 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/';
-        this.location = 'cape town';
+        this.location = 'helsinki';
         this.weatherData = {};
 
         this.fetchData('cape town')
@@ -24,8 +24,7 @@ export class apiScript {
             return null;
         }
     }
-    // next steps is to create method to extract data I need and return it as object.
-    // Then create smaller methods that pull a specific data point from that object.
+
     async getWeatherData () {
         const data = await this.fetchData(this.location);
         // Destructure json into data. Destructure data points into CurrentConditions
@@ -50,6 +49,53 @@ export class apiScript {
         };
         console.log(this.weatherData);
         return this.weatherData;
-        
+    }
+
+    getLocation () {
+        if (!this.weatherData.location) {
+            return 'No data available'
+        } else {
+            return this.weatherData.location;
+        }
+    }
+
+    getTemp () {
+        if (this.weatherData.temp == null) {
+            return 'No data available'
+        } else {
+            return this.weatherData.temp;
+        }
+    }
+
+    getFeelsLike () {
+        if (this.weatherData.feelslike == null) {
+            return 'No data available'
+        } else {
+            return this.weatherData.feelslike;
+        }
+    }
+
+    getWind () {
+        if (!this.weatherData.wind) {
+            return 'No data available'
+        } else {
+            return this.weatherData.wind;
+        }
+    }
+
+    getHumidity () {
+        if (!this.weatherData.humidity) {
+            return 'No data available'
+        } else {
+            return this.weatherData.humidity;
+        }
+    }
+
+    getConditions () {
+        if (!this.weatherData.conditions) {
+            return 'No data available'
+        } else {
+            return this.weatherData.conditions;
+        }
     }
 }
