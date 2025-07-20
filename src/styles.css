@@ -1,3 +1,21 @@
+@font-face {
+    font-family: 'mojang';
+    src:
+        url(./assets/fonts/mojang-regular-webfont.woff2) format(woff2),
+        url(./assets/fonts/mojang-regular-webfont.woff) format(woff);
+        font-weight: normal;
+        font-style: normal;
+}
+
+@font-face {
+    font-family: 'mojang-bold';
+    src:
+        url(./assets/fonts/mojang-bold-webfont.woff2) format(woff2),
+        url(./assets/fonts/mojang-bold-webfont.woff) format(woff);
+        font-weight: normal;
+        font-style: normal;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -14,23 +32,52 @@ input {
     height: 40px;
     padding: 4px;
     border-radius: 5px;
-    /* font: ; */
+    font-family: 'mojang';
 }
 
-h1 {
-    color: orange;
+h1,
+h2 {
+    font-family: 'mojang-bold';
+}
+
+h3,
+p {
+    font-family: 'mojang';
 }
 /* make a grid layout for input and data */
 .container {
+    display: grid;
     width: 100%;
     height: 100%;
-    
+}
+
+.weather-data-box {
+    grid-column: 1/2;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+    margin: 0px 0px 100px 200px;
 }
 
 .numerical-data-box {
     display: flex;
+    column-gap: 20px;
+}
+
+.degrees-box {
+    display: flex;
+    align-items: center;
+    border-right: solid red 4px;
+    padding-right: 10%;
+}
+
+.humidity-box {
+    padding-left: 9%;
 }
 
 .form-container {
-    
+    grid-column: 2/3;
+    justify-self: end;
+    margin: 30px 40px;
 }
