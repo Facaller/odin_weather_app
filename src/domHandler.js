@@ -2,8 +2,9 @@ import { apiScript } from "./weatherApi";
 
 export class domElements {
     constructor () {
-        this.input = document.querySelector('#search');
-        this.error = document.querySelector('.error-text');
+        this.input     = document.querySelector('#search');
+        this.errorBox  = document.querySelector('.error-box');
+        this.errorText = document.querySelector('.error-text');
     }
 }
 
@@ -17,34 +18,31 @@ export class domHandler {
     checkInput () {
         const input = this.elements.input;
         const inputValue = input.value.trim();
-//need to check if input is a valid location
-        if (!inputValue) {
-            console.log('Input error');
-            this.showErrorMessage();
-            return null
-        } else {
-            this.removeErrorMessage();
-            return inputValue;
-        }
+
+        return inputValue || null;
     }
 
-    submitInput () {
+    showErrorMessage (message) {
+        const errorText = this.elements.errorText;
+        const errorBox  = this.elements.errorBox;
 
-    }
-
-    showErrorMessage () {
-        const error = this.elements.error;
-        if (error.classList.contains('hidden')) {
-            error.classList.remove('hidden');
-            console.log('show error method');
-        }
+        errorText.textContent = message;
+        errorBox.classList.remove('hidden');
     }
 
     removeErrorMessage () {
-        const error = this.elements.error;
-        if (!error.classList.contains('hidden')) {
-            error.classList.add('hidden');
-            console.log('remove error method');
+        const errorText = this.elements.errorText;
+        const errorBox  = this.elements.errorBox;
+
+        errorText.textContent = '';
+        errorBox.classList.add('hidden');
+    }
+
+    submitInput = (event) => {
+        const inputValue = this.checkInput();
+        if (!inputValue) {
+            this.showErrorMessage('Please enter a location')
+            return
         }
     }
 }
