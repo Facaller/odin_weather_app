@@ -39,10 +39,13 @@ export class domHandler {
     }
 
     submitInput = (event) => {
-        const inputValue = this.checkInput();
-        if (!inputValue) {
+        const userInput = this.checkInput();
+        if (!userInput) {
             this.showErrorMessage('Please enter a location')
             return
         }
+        this.removeErrorMessage();
+
+        
     }
 }
