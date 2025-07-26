@@ -1,3 +1,5 @@
+import { validate } from "webpack";
+
 export class apiScript {
     constructor () {
         this.apiKey  = '6SZ6Y2GHCYFLUKC6VLHMLFPDS';
@@ -17,12 +19,20 @@ export class apiScript {
     
             const response = await fetch(url);
             const data     = await response.json();
-            console.log(data);
-            return data;
+            const validtion = this.validateData(data);
+            if (validtion) {
+                console.log(data);
+                return data;
+            }
         } catch (error) {
             console.log(error)
             return null;
         }
+    }
+
+    validateData (data) {
+        const validate = data.hasOwnProperty('currentConditions');
+        return validate;
     }
 
     async getWeatherData () {

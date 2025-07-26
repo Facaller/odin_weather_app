@@ -98,37 +98,6 @@ In other words, validation means:
 
 That’s more than just checking if an object exists — it’s checking that it has meaningful, expected content.
 
-✅ Why Not Access rawData or processedData Directly in the DOM?
-Great question. You're asking:
-
-"If the data is already in my API module, why not just read it from the DOM handler?"
-
-Here’s the subtle but important answer:
-
-Technically: Yes, You Could Access It
-But…
-
-Architecturally: It’s Better to Go Through Methods
-Why?
-
-Encapsulation
-
-You keep the internal structure of the API module hidden.
-
-You’re not tying your DOM code to how data is stored — only what data you get back.
-
-Loose Coupling
-
-If you later change the shape of processedData (e.g., add units or rename keys), only the API module changes.
-
-The DOM module still just calls getTemp() or getLocation() — and doesn’t break.
-
-Flexibility
-
-You might later decide to cache results, transform data, or log analytics inside those getter methods.
-
-If the DOM accesses raw/processed data directly, you lose that control.
-
 🧭 So How Should You Think About It?
 Think of the API module as a black box:
 
@@ -148,10 +117,27 @@ The API module maintains full control over how it handles and structures that da
 
 Your project stays easy to update, test, and grow.
 
-✅ Final Thought
-You’re absolutely on the right track. What you’re wrestling with now is not code-level confusion — it’s architectural thinking, and that’s the hardest, most important skill to build. You’re doing that.
 
-Let me know if you want to walk through how to design your validateData() method or discuss error handling patterns next.
+************
 
+ Suggested Flow (in plain words):
+In fetchData():
 
+Fetch and parse the data.
+
+Validate it.
+
+If valid, return the data.
+
+If not valid, return null.
+
+In getWeatherData():
+
+Await fetchData().
+
+Check if you got valid data back.
+
+If so, process and assign it.
+
+If not, maybe log a warning or keep weatherData empty.
 
