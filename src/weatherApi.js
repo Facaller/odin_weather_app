@@ -1,11 +1,10 @@
-import { validate } from "webpack";
-
 export class apiScript {
     constructor () {
         this.apiKey  = '6SZ6Y2GHCYFLUKC6VLHMLFPDS';
         this.baseUrl = 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/';
         this.location = 'helsinki';
-        this.weatherData = {};
+        this.rawData = {};
+        this.processedData = {};
 
         this.fetchData('cape town')
         this.getWeatherData();
@@ -19,10 +18,11 @@ export class apiScript {
     
             const response = await fetch(url);
             const data     = await response.json();
-            const validtion = this.validateData(data);
-            if (validtion) {
+            const validation = this.validateData(data);
+            if (validation) {
                 console.log(data);
-                return data;
+                this.rawData = data;
+                return this.rawData;
             }
         } catch (error) {
             console.log(error)
@@ -31,8 +31,27 @@ export class apiScript {
     }
 
     validateData (data) {
-        const validate = data.hasOwnProperty('currentConditions');
-        return validate;
+        if (!data) {
+            return null;
+        } 
+        
+        if (data) {
+            const objectLength = Object.keys(data).length === 0;
+            const objectLocation = data.hasOwnProperty('currentConditions');
+            const objectAddress = data.hasOwnProperty('address');
+
+            if (objectLength === false && objectLocation === true && objectAddress === true) {
+                return true;
+            }
+        }
+    }
+
+    validateConditions (data) {
+
+    }
+
+    validateValueTypes (data) {
+
     }
 
     async getWeatherData () {
@@ -49,7 +68,7 @@ export class apiScript {
             windspeed: wind,
         } = currentConditions;
 
-        this.weatherData = {
+        this.processedData = {
             location,
             temp,
             feelslike,
@@ -57,55 +76,55 @@ export class apiScript {
             humidity,
             conditions
         };
-        console.log(this.weatherData);
-        return this.weatherData;
+        console.log(this.processedData);
+        return this.processedData;
     }
 
     getLocation () {
-        if (!this.weatherData.location) {
+        if (!this.processedData.location) {
             return 'No data available'
         } else {
-            return this.weatherData.location;
+            return this.processedData.location;
         }
     }
 
     getTemp () {
-        if (this.weatherData.temp == null) {
+        if (this.processedData.temp == null) {
             return 'No data available'
         } else {
-            return this.weatherData.temp;
+            return this.processedData.temp;
         }
     }
 
     getFeelsLike () {
-        if (this.weatherData.feelslike == null) {
+        if (this.processedData.feelslike == null) {
             return 'No data available'
         } else {
-            return this.weatherData.feelslike;
+            return this.processedData.feelslike;
         }
     }
 
     getWind () {
-        if (!this.weatherData.wind) {
+        if (!this.processedData.wind) {
             return 'No data available'
         } else {
-            return this.weatherData.wind;
+            return this.processedData.wind;
         }
     }
 
     getHumidity () {
-        if (!this.weatherData.humidity) {
+        if (!this.processedData.humidity) {
             return 'No data available'
         } else {
-            return this.weatherData.humidity;
+            return this.processedData.humidity;
         }
     }
 
     getConditions () {
-        if (!this.weatherData.conditions) {
+        if (!this.processedData.conditions) {
             return 'No data available'
         } else {
-            return this.weatherData.conditions;
+            return this.processedData.conditions;
         }
     }
 }
