@@ -31,27 +31,38 @@ export class apiScript {
     }
 
     validateData (data) {
-        if (!data) {
-            return null;
-        } 
+        if (!data) return null;
         
-        if (data) {
-            const objectLength = Object.keys(data).length === 0;
-            const objectLocation = data.hasOwnProperty('currentConditions');
-            const objectAddress = data.hasOwnProperty('address');
+        const isEmptyObject = Object.keys(data).length === 0;
+        const objectLocation = 'currentConditions' in data;
+        const objectAddress = 'address' in data;
 
-            if (objectLength === false && objectLocation === true && objectAddress === true) {
-                return true;
-            }
+        if (!isEmptyObject && objectLocation && objectAddress) {
+            return true;
         }
+        return false;
     }
 
     validateConditions (data) {
+        if (!this.isPlainObject(data.currentConditions)) return false;
 
+        const keysToCheck = ['conditions', 'feelslike', 'humidity', 'temp', 'windspeed']
+        const allKeysExist = keysToCheck.every(key => data.currentConditions.hasOwnProperty(key));
+
+        return allKeysExist;
     }
 
     validateValueTypes (data) {
 
+    }
+
+    isPlainObject(value) {
+        return (
+            typeof value === 'object' &&
+            value !== null &&
+            !Array.isArray(value) &&
+            Object.prototype.toString.call(value) === '[object Object]'
+        );
     }
 
     async getWeatherData () {
