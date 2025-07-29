@@ -29,7 +29,7 @@ export class apiScript {
             return null;
         }
     }
-
+//validation methods
     validateData (data) {
         if (!data) return null;
         
@@ -43,7 +43,7 @@ export class apiScript {
         return false;
     }
 
-    validateConditions (data) {
+    validateCurrentConditions (data) {
         if (!this.isPlainObject(data.currentConditions)) return false;
 
         const keysToCheck = ['conditions', 'feelslike', 'humidity', 'temp', 'windspeed']
@@ -53,6 +53,38 @@ export class apiScript {
     }
 
     validateValueTypes (data) {
+        const conditions = data.currentConditions;
+        const areValuesValid = Object.values(conditions)
+        .every(value => value != null &&
+                        value !== '' &&
+                        value !== 'N/A' &&
+                        value !== 'unknown');
+        if (!areValuesValid) return false;
+
+
+    }
+
+    validateTemp (data) {
+        const temperature = data.currentConditions.temp;
+        if (typeof temp !== 'number') {
+            return false;
+        }
+        return true;
+    }
+
+    validateHumidity () {
+
+    }
+
+    validateConditions () {
+
+    }
+
+    validateFeelsLike () {
+
+    }
+
+    validateWind () {
 
     }
 
@@ -64,7 +96,7 @@ export class apiScript {
             Object.prototype.toString.call(value) === '[object Object]'
         );
     }
-
+//getters
     async getWeatherData () {
         const data = await this.fetchData(this.location);
         // Destructure json into data. Destructure data points into CurrentConditions
