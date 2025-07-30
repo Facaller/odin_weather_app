@@ -5,9 +5,6 @@ export class apiScript {
         this.location = 'helsinki';
         this.rawData = {};
         this.processedData = {};
-
-        this.fetchData('cape town')
-        this.getWeatherData();
     }
 
     async fetchData (location) {
@@ -22,25 +19,27 @@ export class apiScript {
             if (validation) {
                 console.log(data);
                 this.rawData = data;
-                return this.rawData;
+                return true;;
             }
         } catch (error) {
             console.log(error)
-            return null;
+            return false;
         }
     }
 //validation methods
     validateData (data) {
-        if (!data) return null;
+        if (!data) return false;
         
         const isEmptyObject = Object.keys(data).length === 0;
         const objectLocation = 'currentConditions' in data;
         const objectAddress = 'address' in data;
+        if (isEmptyObject && !objectLocation && !objectAddress) return false;
 
-        if (!isEmptyObject && objectLocation && objectAddress) {
-            return true;
-        }
-        return false;
+        const conditionValidation = this.validateCurrentConditions(data);
+        const valueValidation = this.validateValueTypes(data);
+        if (!conditionValidation || !valueValidation) return false;
+        
+        return true;
     }
 
     validateCurrentConditions (data) {
@@ -55,37 +54,70 @@ export class apiScript {
     validateValueTypes (data) {
         const conditions = data.currentConditions;
         const areValuesValid = Object.values(conditions)
-        .every(value => value != null &&
-                        value !== '' &&
-                        value !== 'N/A' &&
-                        value !== 'unknown');
+        .every(value => value != null 
+                        && value !== ''
+                        && value !== '-'
+                        && value !== '--'
+                        && value !== 'N/A'
+                        && value !== 'unknown');
         if (!areValuesValid) return false;
 
+        const tempBool       = this.validateTemp(conditions);
+        const humidityBool   = this.validateHumidity(conditions);
+        const conditionsBool = this.validateConditions(conditions);
+        const feelsLikeBool  = this.validateFeelsLike(conditions);
+        const windBool       = this.validateWind(conditions);
 
-    }
-
-    validateTemp (data) {
-        const temperature = data.currentConditions.temp;
-        if (typeof temp !== 'number') {
+        if (!tempBool
+            && !humidityBool
+            && !conditionsBool
+            && !feelsLikeBool
+            && !windBool) {
             return false;
         }
         return true;
     }
 
-    validateHumidity () {
-
+    validateTemp (data) {
+        const tempValue = data.temp;
+        if (typeof tempValue !== 'number') {
+            return false;
+        }
+        return true;
     }
 
-    validateConditions () {
-
+    validateHumidity (data) {
+        const humidityValue = data.humidity
+        if (typeof humidityValue !== 'number' 
+            || humidityValue > 100 
+            || humidityValue < 0) {
+                return false;
+        }
+        return true;
     }
 
-    validateFeelsLike () {
-
+    validateConditions (data) {
+        const conditionsValue = data.conditions;
+        if (typeof conditionsValue !== 'string') {
+            return false;
+        }
+        return true;
     }
 
-    validateWind () {
+    validateFeelsLike (data) {
+        const feelsLikeValue = data.feelslike;
+        if (typeof feelsLikeValue !== 'number') {
+            return false;
+        }
+        return true;
+    }
 
+    validateWind (data) {
+        const windValue = data.windspeed;
+        if (typeof windValue !== 'number') {
+            return false;
+        }
+        return true
     }
 
     isPlainObject(value) {
@@ -97,8 +129,8 @@ export class apiScript {
         );
     }
 //getters
-    async getWeatherData () {
-        const data = await this.fetchData(this.location);
+    getWeatherData () {
+        const data = this.rawData;
         // Destructure json into data. Destructure data points into CurrentConditions
         // Build new object with empty constructor object
         const { address: location, currentConditions } = data;
