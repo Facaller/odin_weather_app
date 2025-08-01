@@ -28,8 +28,8 @@ export class domHandler {
 
         return inputValue || null;
     }
-// Event handlers
-    async submitInput () {
+
+    async processInput () {
         const userInput = this.checkInput();
         if (!userInput) {
             this.showErrorMessage('Please enter a location')
@@ -42,8 +42,23 @@ export class domHandler {
 
         const setWeatherData = this.weatherAPI.getWeatherData();
         this.weatherData = setWeatherData;
+        this.populateElements();
     }
+
+// Event handlers
+
+    submitInput = () => {
+        const input = this.elements.input;
+        input.addEventListener('keydown', async (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                await this.processInput();   
+            }
+        });
+    }
+
 // UI rendering methods
+
     showErrorMessage (message) {
         const errorText = this.elements.errorText;
         const errorBox  = this.elements.errorBox;
@@ -64,5 +79,24 @@ export class domHandler {
         if (element) {
         element.textContent = newValue ?? 'N/A'
         }
+    }
+
+    populateElements () {
+        const data = this.weatherData;
+        if (!this.weatherAPI.isPlainObject(data)) return false;
+
+        const tempVal       = this.elements.tempValue
+        const conditionsVal = this.elements.conditionsValue
+        const locationVal   = this.elements.locationValue
+        const feelsLikeVal  = this.elements.feelsLikeValue
+        const windVal       = this.elements.windValue
+        const humidityVal   = this.elements.humidityValue
+
+        this.updateElement(tempVal, data.temp);
+        this.updateElement(conditionsVal, data.conditions);
+        this.updateElement(locationVal, data.location);
+        this.updateElement(feelsLikeVal, data.feelslike);
+        this.updateElement(windVal, data.wind);
+        this.updateElement(humidityVal, data.humidity);
     }
 }

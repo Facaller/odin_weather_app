@@ -2,7 +2,6 @@ export class apiScript {
     constructor () {
         this.apiKey  = '6SZ6Y2GHCYFLUKC6VLHMLFPDS';
         this.baseUrl = 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/';
-        this.location = 'helsinki';
         this.rawData = {};
         this.processedData = {};
     }

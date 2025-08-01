@@ -1,29 +1,3 @@
-How the Flow Should Work (High-Level Logic)
-Here’s how the flow would ideally look, logically:
-
-User submits input (DOM module)
-
-checkInput() ensures it's not empty (DOM module)
-
-DOM calls await fetchData(input) (API module)
-
-That stores rawData internally
-
-DOM then calls validateData() (API module)
-
-That checks if rawData is structured correctly / usable
-
-If valid → DOM calls getWeatherData() to extract and store processed data (API module)
-
-DOM updates the UI
-
-All API calls, raw/processed storage, and structural validation = API module's job
-
-All input checking, user feedback, and UI updates = DOM module's job
-
-
-*******
-
 ✅ Beginner-Friendly Error Handling Improvements
 You don’t need a full error management system right now, but you can start doing the following:
 
@@ -101,3 +75,114 @@ If true → show weather
 
 If error → show error box with the message
 
+************
+
+CSS & JS Toggle
+
+ Should you use the API or create your own conversion?
+Use the API.
+Definitely — especially at this stage.
+
+Why?
+Accuracy: The API uses standardized, verified conversions (and may even round appropriately for weather context).
+
+Simplicity: You avoid the need to write and maintain conversion formulas, which can seem easy (e.g., °F = °C × 1.8 + 32) but quickly become repetitive or messy across multiple units.
+
+Consistency: The API may include unit-specific formatting or handling (e.g., different wind naming conventions or thresholds), which you’d otherwise have to replicate.
+
+Maintainability: Less code, less to break.
+
+So yes — let the API do the hard part, especially since it already supports unitGroup.
+
+✅ Two-button toggle strategy — Yes, great choice!
+Your idea:
+
+Two buttons: "Metric" and "Imperial"
+
+Each button triggers a fetch using the same location, but changes the unitGroup in the request
+
+DOM updates accordingly
+
+This is the cleanest and most understandable UX for now.
+
+✅ Small enhancements to your plan:
+1. Store the last search
+You’ll want to keep the last location the user searched in memory so that the unit buttons don’t require a new input. Something like:
+
+js
+Copy
+Edit
+this.lastLocation = userInput;
+Then on toggle:
+
+js
+Copy
+Edit
+this.weatherAPI.fetchData(this.lastLocation, unitGroup);
+If there's no lastLocation, disable the toggle buttons until a location has been searched at least once.
+
+2. Visually indicate the selected unit
+Use a class toggle to highlight the active unit button. For example:
+
+css
+Copy
+Edit
+.unit-button.active {
+  background-color: white;
+  color: black;
+}
+In JS, toggle the class appropriately after each click.
+
+3. Debounce or disable the buttons briefly
+As you said, prevent spamming — you can do this in a few ways:
+
+a. Disable during fetch
+js
+Copy
+Edit
+button.disabled = true;
+await this.fetchWeatherData();
+button.disabled = false;
+b. Or use a timeout (e.g., 5 seconds)
+js
+Copy
+Edit
+button.disabled = true;
+setTimeout(() => button.disabled = false, 5000);
+This works, though the first is better if you want to re-enable based on actual completion rather than time.
+
+✅ Suggested data flow for toggle system
+plaintext
+Copy
+Edit
+User types location → hits Enter
+↓
+Fetch data with `unitGroup = metric`
+↓
+Store:
+  - weather data
+  - lastLocation
+  - current unit system
+↓
+Display data + enable toggle buttons
+↓
+User clicks “Imperial” button
+↓
+Fetch same location with `unitGroup = us`
+↓
+Update DOM, unit state
+✅ Summary
+You're asking the right questions and architecting things clearly. Here's a quick checklist of your approach:
+
+Component	Status
+Use API unitGroup toggle	✅ Yes, clean & accurate
+Two-button system	✅ Simple, intuitive
+Store last location	✅ Smart idea for toggle reuse
+Disable button briefly	✅ Prevent spamming
+Remove ::after for units	✅ Makes rendering flexible
+Display units in JS	✅ Best for dynamic UI
+Add visual feedback	✅ Optional polish
+
+You're well on your way to turning a “learning” app into a usable, well-structured one.
+
+Would you like help structuring how to wire this into your current domHandler methods?
