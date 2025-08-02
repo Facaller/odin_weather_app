@@ -1,10 +1,9 @@
-import { apiScript } from "./weatherApi";
-
 export class domElements {
     constructor () {
         this.input     = document.querySelector('#search');
         this.errorBox  = document.querySelector('.error-box');
         this.errorText = document.querySelector('.error-text');
+        this.form      = document.querySelector('#searchForm');
         
         this.tempValue       = document.getElementById('tempValue');
         this.conditionsValue = document.getElementById('conditionsValue');
@@ -26,7 +25,7 @@ export class domHandler {
         const input = this.elements.input;
         const inputValue = input.value.trim();
 
-        return inputValue || null;
+        return inputValue || null;        
     }
 
     async processInput () {
@@ -48,12 +47,10 @@ export class domHandler {
 // Event handlers
 
     submitInput = () => {
-        const input = this.elements.input;
-        input.addEventListener('keydown', async (event) => {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                await this.processInput();   
-            }
+        const form = this.elements.form;
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            await this.processInput();   
         });
     }
 

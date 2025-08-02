@@ -24,16 +24,20 @@
             </div>
         </div>
         <div class="form-container">
-            <form action="">
-                <div>
+            <div class="unit-box">
+                <button id="metricBtn" class="metric-btn">Met</button>
+                <button id="fahrenheitBtn" class="fahrenheit-btn">Fah</button>
+            </div>
+            <div>
+                <form id="searchForm" action="">
                     <label for="search"></label>
                     <input type="text" name="search" id="search" placeholder="Search city">
                     <div class="error-box hidden">
                         <!-- change this to use rest api -->
                         <p class="error-text">Location not found</p>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 </body>
