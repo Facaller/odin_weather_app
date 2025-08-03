@@ -3,17 +3,19 @@ export class apiScript {
         this.apiKey  = '6SZ6Y2GHCYFLUKC6VLHMLFPDS';
         this.baseUrl = 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/';
         this.rawData = {};
+        this.unitGroup = 'metric'
         this.processedData = {};
     }
 
-    async fetchData (location) {
+    async fetchData (location, unit) {
         try {
-            const apiKey  = this.apiKey;
-            const baseUrl = this.baseUrl;
-            const url     = `${baseUrl}${location}?key=${apiKey}`;
+            const apiKey    = this.apiKey;
+            const baseUrl   = this.baseUrl;
+            const unitGroup = `unitGroup=${unit}`;
+            const url       = `${baseUrl}${location}?${unitGroup}&key=${apiKey}`;
     
-            const response = await fetch(url);
-            const data     = await response.json();
+            const response   = await fetch(url);
+            const data       = await response.json();
             const validation = this.validateData(data);
             if (validation) {
                 console.log(data);

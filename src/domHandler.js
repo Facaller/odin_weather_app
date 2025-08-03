@@ -4,6 +4,7 @@ export class domElements {
         this.errorBox  = document.querySelector('.error-box');
         this.errorText = document.querySelector('.error-text');
         this.form      = document.querySelector('#searchForm');
+        this.submit    = document.querySelector('#submit');
         
         this.tempValue       = document.getElementById('tempValue');
         this.conditionsValue = document.getElementById('conditionsValue');
@@ -16,9 +17,10 @@ export class domElements {
 
 export class domHandler {
     constructor (weatherAPI) {
-        this.weatherAPI  = weatherAPI;
-        this.elements    = new domElements();
-        this.weatherData = {};
+        this.weatherAPI   = weatherAPI;
+        this.elements     = new domElements();
+        this.weatherData  = {};
+        this.lastLocation = '';
     }
 
     checkInput () {
@@ -34,11 +36,13 @@ export class domHandler {
             this.showErrorMessage('Please enter a location')
             return
         }
+
+        this.lastLocation = userInput;
         this.removeErrorMessage();
 
-        const callAPI = await this.weatherAPI.fetchData(userInput);
+        const callAPI = await this.weatherAPI.fetchData(this.lastLocation, );
         if (!callAPI) return;
-
+// program stops here
         const setWeatherData = this.weatherAPI.getWeatherData();
         this.weatherData = setWeatherData;
         this.populateElements();
@@ -47,8 +51,8 @@ export class domHandler {
 // Event handlers
 
     submitInput = () => {
-        const form = this.elements.form;
-        form.addEventListener('submit', async (event) => {
+        const submit = this.elements.submit;
+        submit.addEventListener('click', async (event) => {
             event.preventDefault();
             await this.processInput();   
         });

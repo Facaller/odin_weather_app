@@ -31,8 +31,8 @@ input {
     width: 250px;
     height: 40px;
     padding: 8px 12px;
-    border: 1px solid rgba(255, 255, 255, 0.4); /* soft white border */
-    border-radius: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 3px;
     font: 1rem 'mojang';
     color: white;
     background-color: rgba(60, 60, 60, 0.6);
@@ -81,7 +81,7 @@ p {
 span {
     font-family: 'mojang-bold';
 }
-/* make a grid layout for input and data */
+/* data container */
 .container {
     display: grid;
     grid-template-columns: 3fr minmax(270px, 1fr);
@@ -132,13 +132,32 @@ span {
 .feels-like {
     position: relative;
 }
-
+/* form container */
 .form-container {
     grid-column: 2/3;
     justify-self: end;
     align-self: flex-start;
-    margin: 30px 40px 0px 0px;
+    margin: 40px 40px 0px 0px;
 }
+
+.unit-box {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.metric,
+.fahrenheit {
+    padding: 8px 20px;
+    border-radius: 3px;
+    font: 1rem 'mojang';
+    transition: transform 0.2s ease
+}
+
+.metric:hover,
+.fahrenheit:hover {
+    transform: scale(1.05);
+}
+
 
 .error-box {
     display: flex;

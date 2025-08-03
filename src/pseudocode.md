@@ -79,21 +79,6 @@ If error → show error box with the message
 
 CSS & JS Toggle
 
- Should you use the API or create your own conversion?
-Use the API.
-Definitely — especially at this stage.
-
-Why?
-Accuracy: The API uses standardized, verified conversions (and may even round appropriately for weather context).
-
-Simplicity: You avoid the need to write and maintain conversion formulas, which can seem easy (e.g., °F = °C × 1.8 + 32) but quickly become repetitive or messy across multiple units.
-
-Consistency: The API may include unit-specific formatting or handling (e.g., different wind naming conventions or thresholds), which you’d otherwise have to replicate.
-
-Maintainability: Less code, less to break.
-
-So yes — let the API do the hard part, especially since it already supports unitGroup.
-
 ✅ Two-button toggle strategy — Yes, great choice!
 Your idea:
 
@@ -137,24 +122,14 @@ In JS, toggle the class appropriately after each click.
 As you said, prevent spamming — you can do this in a few ways:
 
 a. Disable during fetch
-js
-Copy
-Edit
+
 button.disabled = true;
 await this.fetchWeatherData();
 button.disabled = false;
-b. Or use a timeout (e.g., 5 seconds)
-js
-Copy
-Edit
-button.disabled = true;
-setTimeout(() => button.disabled = false, 5000);
-This works, though the first is better if you want to re-enable based on actual completion rather than time.
+
 
 ✅ Suggested data flow for toggle system
-plaintext
-Copy
-Edit
+
 User types location → hits Enter
 ↓
 Fetch data with `unitGroup = metric`
