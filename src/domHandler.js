@@ -1,9 +1,11 @@
 export class domElements {
     constructor () {
-        this.input     = document.querySelector('#search');
         this.errorBox  = document.querySelector('.error-box');
         this.errorText = document.querySelector('.error-text');
+        this.input     = document.querySelector('#search');        
         this.form      = document.querySelector('#searchForm');
+        this.metric    = document.querySelector('#metricBtn');
+        this.imperial  = document.querySelector('#imperialBtn');
         this.submit    = document.querySelector('#submit');
         
         this.tempValue       = document.getElementById('tempValue');
@@ -21,6 +23,7 @@ export class domHandler {
         this.elements     = new domElements();
         this.weatherData  = {};
         this.lastLocation = '';
+        this.unitGroup    = 'metric';
     }
 
     checkInput () {
@@ -40,12 +43,18 @@ export class domHandler {
         this.lastLocation = userInput;
         this.removeErrorMessage();
 
-        const callAPI = await this.weatherAPI.fetchData(this.lastLocation, );
+        const callAPI = await this.weatherAPI.fetchData(this.lastLocation, this.unitGroup);
         if (!callAPI) return;
 // program stops here
         const setWeatherData = this.weatherAPI.getWeatherData();
         this.weatherData = setWeatherData;
         this.populateElements();
+    }
+
+    async toggleUnitGroup () {
+        this.unitGroup = this.unitGroup === 'metric' ? 'us' : 'metric';
+
+        await this.weatherAPI.fetchData(this.lastLocation, this.unitGroup);
     }
 
 // Event handlers

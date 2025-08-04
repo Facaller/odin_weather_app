@@ -3,7 +3,6 @@ export class apiScript {
         this.apiKey  = '6SZ6Y2GHCYFLUKC6VLHMLFPDS';
         this.baseUrl = 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/';
         this.rawData = {};
-        this.unitGroup = 'metric'
         this.processedData = {};
     }
 
@@ -17,6 +16,7 @@ export class apiScript {
             const response   = await fetch(url);
             const data       = await response.json();
             const validation = this.validateData(data);
+            
             if (validation) {
                 console.log(data);
                 this.rawData = data;
