@@ -55,18 +55,51 @@ export class domHandler {
         this.unitGroup = this.unitGroup === 'metric' ? 'us' : 'metric';
 
         await this.weatherAPI.fetchData(this.lastLocation, this.unitGroup);
+        this.populateElements();
     }
 
 // Event handlers
 
     submitInput = () => {
-        const submit = this.elements.submit;
-        submit.addEventListener('click', async (event) => {
+        const form = this.elements.form;
+        form.addEventListener('click', async (event) => {
             event.preventDefault();
             await this.processInput();   
         });
     }
 
+    dataToMetric = () => {
+        const metric = this.elements.metric;
+        metric.addEventListener('click', async (event) => {
+            console.log('metric works')
+            event.preventDefault();
+            this.toggleUnitButtons(this.unitGroup);
+            await this.toggleUnitGroup();
+        });
+    }
+
+    dataToImperial = () => {
+        const imperial = this.elements.imperial;
+        imperial.addEventListener('click', async (event) => {
+            console.log('imperial works')
+            event.preventDefault();
+            this.toggleUnitButtons(this.unitGroup);
+            await this.toggleUnitGroup();
+        })
+    }
+
+    toggleUnitButtons (unitGroup) {
+        const metric   = this.elements.metric;
+        const imperial = this.elements.imperial;
+
+        if (unitGroup === 'metric') {
+            metric.classList.add('active');
+            imperial.classList.remove('active');
+        } else {
+            imperial.classList.add('active');
+            metric.classList.remove('active');
+        }
+    }
 // UI rendering methods
 
     showErrorMessage (message) {
