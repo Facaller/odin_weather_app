@@ -14,6 +14,7 @@ export class apiScript {
             const url       = `${baseUrl}${location}?${unitGroup}&key=${apiKey}`;
     
             const response   = await fetch(url);
+            console.log('reached fetch');
             const data       = await response.json();
             const validation = this.validateData(data);
             

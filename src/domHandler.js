@@ -24,6 +24,8 @@ export class domHandler {
         this.weatherData  = {};
         this.lastLocation = '';
         this.unitGroup    = 'metric';
+        
+        this.setUnitButtonState(this.location);
     }
 
     checkInput () {
@@ -53,9 +55,21 @@ export class domHandler {
 
     async toggleUnitGroup () {
         this.unitGroup = this.unitGroup === 'metric' ? 'us' : 'metric';
-
         await this.weatherAPI.fetchData(this.lastLocation, this.unitGroup);
         this.populateElements();
+    }
+
+    setUnitButtonState (location) {
+        const metric   = this.elements.metric;
+        const imperial = this.elements.imperial;
+
+        if (!location || location === '') {
+            metric.disabled = true;
+            imperial.disabled = true;
+        } else {
+            metric.disabled = false;
+            imperial.disabled = false;
+        }
     }
 
 // Event handlers
