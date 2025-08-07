@@ -6,7 +6,7 @@ export class domElements {
         this.form      = document.querySelector('#searchForm');
         this.metric    = document.querySelector('#metricBtn');
         this.imperial  = document.querySelector('#imperialBtn');
-        this.submit    = document.querySelector('#submit');
+        this.triggers  = [this.metric, this.imperial, this.form];
         
         this.tempValue       = document.getElementById('tempValue');
         this.conditionsValue = document.getElementById('conditionsValue');
@@ -45,7 +45,10 @@ export class domHandler {
         this.lastLocation = userInput;
         this.removeErrorMessage();
 
-        const callAPI = await this.weatherAPI.fetchData(this.lastLocation, this.unitGroup);
+        const callAPI = await this.secureFetch(
+            this.elements.triggers,
+            () => this.weatherAPI.fetchData(this.lastLocation, this.unitGroup)
+        );
         if (!callAPI) return;
 // program stops here
         const setWeatherData = this.weatherAPI.getWeatherData();
@@ -55,8 +58,28 @@ export class domHandler {
 
     async toggleUnitGroup () {
         this.unitGroup = this.unitGroup === 'metric' ? 'us' : 'metric';
-        await this.weatherAPI.fetchData(this.lastLocation, this.unitGroup);
+        
+        const callAPI = await this.secureFetch(
+            this.elements.triggers,
+            () => this.weatherAPI.fetchData(this.lastLocation, this.unitGroup)
+        );
+        if (!callAPI) return;
+        
         this.populateElements();
+    }
+
+    setDisableElements (elements, bool) {
+        elements.forEach(element => {
+            element.disabled = bool
+        });
+    }
+
+    async secureFetch (elements, asyncFetch) {
+        this.setDisableElements(elements, true);
+        const result = await asyncFetch();
+        this.setDisableElements(elements, false);
+
+        return result;
     }
 
     setUnitButtonState (location) {
