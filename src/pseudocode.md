@@ -161,3 +161,13 @@ Add visual feedback	✅ Optional polish
 You're well on your way to turning a “learning” app into a usable, well-structured one.
 
 Would you like help structuring how to wire this into your current domHandler methods?
+
+************
+
+--Questions to figure out--
+
+1 - How to get the country and city from API (Not showing in address)
+2 - Why null is causing object values validation to fail (a value is = to null but which one)
+3 - Unit Groups toggle is messed up (good job btw, fuggin' ape). Switch from toggle logic to hard set logic
+4 - Add units to values
+5 - Change units added to relevant unit system

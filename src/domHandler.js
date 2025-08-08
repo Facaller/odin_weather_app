@@ -98,10 +98,12 @@ export class domHandler {
 // Event handlers
 
     submitInput = () => {
-        const form = this.elements.form;
-        form.addEventListener('click', async (event) => {
+        const input = this.elements.input;
+        input.addEventListener('keydown', async (event) => {
             event.preventDefault();
-            await this.processInput();   
+            if (event.key === 'Enter') {
+                await this.processInput();   
+            }
         });
     }
 

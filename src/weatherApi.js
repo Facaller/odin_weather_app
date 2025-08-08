@@ -14,7 +14,6 @@ export class apiScript {
             const url       = `${baseUrl}${location}?${unitGroup}&key=${apiKey}`;
     
             const response   = await fetch(url);
-            console.log('reached fetch');
             const data       = await response.json();
             const validation = this.validateData(data);
             
@@ -32,13 +31,13 @@ export class apiScript {
     validateData (data) {
         if (!data) return false;
         
-        const isEmptyObject = Object.keys(data).length === 0;
-        const objectLocation = 'currentConditions' in data;
-        const objectAddress = 'address' in data;
-        if (isEmptyObject && !objectLocation && !objectAddress) return false;
+        const isEmptyObject    = Object.keys(data).length === 0;
+        const objectConditions = 'currentConditions' in data;
+        const objectAddress    = 'address' in data;
+        if (isEmptyObject && !objectConditions && !objectAddress) return false;
 
         const conditionValidation = this.validateCurrentConditions(data);
-        const valueValidation = this.validateValueTypes(data);
+        const valueValidation     = this.validateValueTypes(data);
         if (!conditionValidation || !valueValidation) return false;
         
         return true;
@@ -56,8 +55,7 @@ export class apiScript {
     validateValueTypes (data) {
         const conditions = data.currentConditions;
         const areValuesValid = Object.values(conditions)
-        .every(value => value != null 
-                        && value !== ''
+        .every(value => value !== ''
                         && value !== '-'
                         && value !== '--'
                         && value !== 'N/A'
@@ -153,7 +151,6 @@ export class apiScript {
             humidity,
             conditions
         };
-        console.log(this.processedData);
         return this.processedData;
     }
 
