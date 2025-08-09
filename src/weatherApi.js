@@ -33,7 +33,7 @@ export class apiScript {
         
         const isEmptyObject    = Object.keys(data).length === 0;
         const objectConditions = 'currentConditions' in data;
-        const objectAddress    = 'address' in data;
+        const objectAddress    = 'resolvedAddress' in data;
         if (isEmptyObject && !objectConditions && !objectAddress) return false;
 
         const conditionValidation = this.validateCurrentConditions(data);
@@ -133,7 +133,7 @@ export class apiScript {
         const data = this.rawData;
         // Destructure json into data. Destructure data points into CurrentConditions
         // Build new object with empty constructor object
-        const { address: location, currentConditions } = data;
+        const { resolvedAddress: location, currentConditions } = data;
         
         const {
             temp,

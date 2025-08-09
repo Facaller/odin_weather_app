@@ -6,7 +6,7 @@ export class domElements {
         this.form      = document.querySelector('#searchForm');
         this.metric    = document.querySelector('#metricBtn');
         this.imperial  = document.querySelector('#imperialBtn');
-        this.triggers  = [this.metric, this.imperial, this.form];
+        this.triggers  = [this.metric, this.imperial];
         
         this.tempValue       = document.getElementById('tempValue');
         this.conditionsValue = document.getElementById('conditionsValue');
@@ -57,7 +57,7 @@ export class domHandler {
     }
 
     async toggleUnitGroup () {
-        this.unitGroup = this.unitGroup === 'metric' ? 'us' : 'metric';
+        
         
         const callAPI = await this.secureFetch(
             this.elements.triggers,
@@ -100,8 +100,8 @@ export class domHandler {
     submitInput = () => {
         const input = this.elements.input;
         input.addEventListener('keydown', async (event) => {
-            event.preventDefault();
             if (event.key === 'Enter') {
+                event.preventDefault();
                 await this.processInput();   
             }
         });
@@ -127,13 +127,14 @@ export class domHandler {
         })
     }
 
-    toggleUnitButtons (unitGroup) {
+    toggleUnitButtons (unitGroupBtn) {
         const metric   = this.elements.metric;
         const imperial = this.elements.imperial;
 
-        if (unitGroup === 'metric') {
+        if (unitGroupBtn === 'metric') {
             metric.classList.add('active');
             imperial.classList.remove('active');
+            
         } else {
             imperial.classList.add('active');
             metric.classList.remove('active');
