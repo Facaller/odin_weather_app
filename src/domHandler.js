@@ -24,8 +24,6 @@ export class domHandler {
         this.weatherData  = {};
         this.lastLocation = '';
         this.unitGroup    = 'metric';
-        
-        this.setUnitButtonState(this.location);
     }
 
     checkInput () {
@@ -50,21 +48,19 @@ export class domHandler {
             () => this.weatherAPI.fetchData(this.lastLocation, this.unitGroup)
         );
         if (!callAPI) return;
-// program stops here
-        const setWeatherData = this.weatherAPI.getWeatherData();
-        this.weatherData = setWeatherData;
+
+        this.weatherData = this.weatherAPI.getWeatherData();
         this.populateElements();
     }
 
     async toggleUnitGroup () {
-        
-        
         const callAPI = await this.secureFetch(
             this.elements.triggers,
             () => this.weatherAPI.fetchData(this.lastLocation, this.unitGroup)
         );
         if (!callAPI) return;
         
+        this.weatherData = this.weatherAPI.getWeatherData();
         this.populateElements();
     }
 
@@ -110,8 +106,8 @@ export class domHandler {
     dataToMetric = () => {
         const metric = this.elements.metric;
         metric.addEventListener('click', async (event) => {
-            console.log('metric works')
             event.preventDefault();
+            this.unitGroup = 'metric';
             this.toggleUnitButtons(this.unitGroup);
             await this.toggleUnitGroup();
         });
@@ -120,8 +116,8 @@ export class domHandler {
     dataToImperial = () => {
         const imperial = this.elements.imperial;
         imperial.addEventListener('click', async (event) => {
-            console.log('imperial works')
             event.preventDefault();
+            this.unitGroup = 'us';
             this.toggleUnitButtons(this.unitGroup);
             await this.toggleUnitGroup();
         })
@@ -134,7 +130,6 @@ export class domHandler {
         if (unitGroupBtn === 'metric') {
             metric.classList.add('active');
             imperial.classList.remove('active');
-            
         } else {
             imperial.classList.add('active');
             metric.classList.remove('active');
