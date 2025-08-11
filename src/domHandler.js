@@ -24,6 +24,8 @@ export class domHandler {
         this.weatherData  = {};
         this.lastLocation = '';
         this.unitGroup    = 'metric';
+
+        this.setUnitButtonState();
     }
 
     checkInput () {
@@ -51,6 +53,7 @@ export class domHandler {
 
         this.weatherData = this.weatherAPI.getWeatherData();
         this.populateElements();
+        this.updateElementUnits(this.unitGroup);
     }
 
     async toggleUnitGroup () {
@@ -62,6 +65,7 @@ export class domHandler {
         
         this.weatherData = this.weatherAPI.getWeatherData();
         this.populateElements();
+        this.updateElementUnits(this.unitGroup);
     }
 
     setDisableElements (elements, bool) {
@@ -159,16 +163,41 @@ export class domHandler {
         }
     }
 
+    updateElementUnits (units) {
+        const tempVal       = this.elements.tempValue;
+        const feelsLikeVal  = this.elements.feelsLikeValue;
+        const windVal       = this.elements.windValue;
+        const humidityVal   = this.elements.humidityValue;
+        const humidity      = '%';
+
+        if (units === 'metric') {
+            const celsius = '\u00B0C';
+            const kilometer = 'km';
+            
+            tempVal.textContent = `${tempVal.textContent}${celsius}`;
+            feelsLikeVal.textContent = `${feelsLikeVal.textContent}${celsius}`;
+            windVal.textContent =`${windVal.textContent}${kilometer}`;
+        } else {
+            const imperial = '\u00B0F';
+            const miles = 'mi';
+
+            tempVal.textContent = `${tempVal.textContent}${imperial}`;
+            feelsLikeVal.textContent = `${feelsLikeVal.textContent}${imperial}`;
+            windVal.textContent =`${windVal.textContent}${miles}`;
+        }
+        humidityVal.textContent = `${humidityVal.textContent}${humidity}`
+    }
+
     populateElements () {
         const data = this.weatherData;
         if (!this.weatherAPI.isPlainObject(data)) return false;
 
-        const tempVal       = this.elements.tempValue
-        const conditionsVal = this.elements.conditionsValue
-        const locationVal   = this.elements.locationValue
-        const feelsLikeVal  = this.elements.feelsLikeValue
-        const windVal       = this.elements.windValue
-        const humidityVal   = this.elements.humidityValue
+        const tempVal       = this.elements.tempValue;
+        const conditionsVal = this.elements.conditionsValue;
+        const locationVal   = this.elements.locationValue;
+        const feelsLikeVal  = this.elements.feelsLikeValue;
+        const windVal       = this.elements.windValue;
+        const humidityVal   = this.elements.humidityValue;
 
         this.updateElement(tempVal, data.temp);
         this.updateElement(conditionsVal, data.conditions);
