@@ -15,9 +15,13 @@
             <div class="numerical-data-box">
                 <div class="degrees-box">
                     <h1 id="tempValue" class="temperature">69</h1>
+                    <span class="unit"></span>
                 </div>
                 <div class="humidity-box">
-                    <p>Feels like: <span id="feelsLikeValue" class="feels-like">69</span></p>
+                    <p>Feels like: 
+                        <span id="feelsLikeValue" class="feels-like">69</span>
+                        <span class="unit"></span>
+                    </p>
                     <p>Wind: <span id="windValue">6km</span></p>
                     <p>Humidity: <span id="humidityValue">17%</span></p>
                 </div>
@@ -30,7 +34,6 @@
             </div>
             <div>
                 <form id="searchForm" action="">
-                    <!-- <button type="submit" id="submit">Submit</button> -->
                     <label for="search"></label>
                     <input type="text" name="search" id="search" placeholder="Search city">
                     <div class="error-box hidden">

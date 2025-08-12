@@ -6,6 +6,7 @@ export class domElements {
         this.form      = document.querySelector('#searchForm');
         this.metric    = document.querySelector('#metricBtn');
         this.imperial  = document.querySelector('#imperialBtn');
+        this.tempUnit  = document.querySelectorAll('.unit');
         this.triggers  = [this.metric, this.imperial];
         
         this.tempValue       = document.getElementById('tempValue');
@@ -163,29 +164,23 @@ export class domHandler {
         }
     }
 
-    updateElementUnits (units) {
-        const tempVal       = this.elements.tempValue;
-        const feelsLikeVal  = this.elements.feelsLikeValue;
-        const windVal       = this.elements.windValue;
-        const humidityVal   = this.elements.humidityValue;
-        const humidity      = '%';
+    updateElementUnits (unitGroup) {
+        const tempUnit    = this.elements.tempUnit;
+        const windVal     = this.elements.windValue;
+        const humidityVal = this.elements.humidityValue;
 
-        if (units === 'metric') {
-            const celsius = '\u00B0C';
-            const kilometer = 'km';
-            
-            tempVal.textContent = `${tempVal.textContent}${celsius}`;
-            feelsLikeVal.textContent = `${feelsLikeVal.textContent}${celsius}`;
-            windVal.textContent =`${windVal.textContent}${kilometer}`;
+        if (unitGroup === 'metric') {
+            tempUnit.forEach(unit => {
+                unit.textContent = ' \u00B0C';
+            });
+            windVal.textContent =`${windVal.textContent} km`;
         } else {
-            const imperial = '\u00B0F';
-            const miles = 'mi';
-
-            tempVal.textContent = `${tempVal.textContent}${imperial}`;
-            feelsLikeVal.textContent = `${feelsLikeVal.textContent}${imperial}`;
-            windVal.textContent =`${windVal.textContent}${miles}`;
+            tempUnit.forEach(unit => {
+                unit.textContent = ' \u00B0F';
+            });
+            windVal.textContent =`${windVal.textContent} mi`;
         }
-        humidityVal.textContent = `${humidityVal.textContent}${humidity}`
+        humidityVal.textContent = `${humidityVal.textContent}%`    
     }
 
     populateElements () {
