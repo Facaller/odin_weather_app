@@ -50,7 +50,7 @@ input::placeholder {
 }
 
 h1 {
-    font-size: 8rem;
+    font-size: 7rem;
 }
 
 h2 {
@@ -113,7 +113,9 @@ span {
 
 .degrees-box {
     display: flex;
+    position: relative;
     align-items: center;
+    margin-right: 30px;
 }
 
 .temperature {
@@ -123,15 +125,39 @@ span {
 }
 
 .humidity-box {
-    padding-left: 50px;
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    padding-left: 35px;
     border-left: 4px solid black;
 }
 
-.feels-like {
+.feelslike-box {
+    display: flex;
+    font-family: 'mojang';
+}
+
+.feelslike-para {
     position: relative;
+}
+
+.temp-unit,
+.feelslike-unit {
+    position: absolute;
+    align-self: flex-start;
+}
+
+.temp-unit {
+    right: -7%;
+    top: -12%;
+    font-size: 1.6rem;
+}
+
+.feelslike-unit {
+    right: -10%;
+    top: -50%;
+    font-size: .7rem;
 }
 /* form container */
 .form-container {

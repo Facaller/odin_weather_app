@@ -6,7 +6,8 @@ export class domElements {
         this.form      = document.querySelector('#searchForm');
         this.metric    = document.querySelector('#metricBtn');
         this.imperial  = document.querySelector('#imperialBtn');
-        this.tempUnit  = document.querySelectorAll('.unit');
+        this.tempUnit  = document.querySelector('.temp-unit');
+        this.feelsUnit = document.querySelector('.feelslike-unit');
         this.triggers  = [this.metric, this.imperial];
         
         this.tempValue       = document.getElementById('tempValue');
@@ -168,17 +169,16 @@ export class domHandler {
         const tempUnit    = this.elements.tempUnit;
         const windVal     = this.elements.windValue;
         const humidityVal = this.elements.humidityValue;
+        const feeslsUnit  = this.elements.feelsUnit;
 
         if (unitGroup === 'metric') {
-            tempUnit.forEach(unit => {
-                unit.textContent = ' \u00B0C';
-            });
-            windVal.textContent =`${windVal.textContent} km`;
+            tempUnit.textContent   = ' \u00B0C';
+            feeslsUnit.textContent = ' \u00B0C';
+            windVal.textContent    =`${windVal.textContent} km`;
         } else {
-            tempUnit.forEach(unit => {
-                unit.textContent = ' \u00B0F';
-            });
-            windVal.textContent =`${windVal.textContent} mi`;
+            tempUnit.textContent   = ' \u00B0F';
+            feeslsUnit.textContent = ' \u00B0F';
+            windVal.textContent    =`${windVal.textContent} mi`;
         }
         humidityVal.textContent = `${humidityVal.textContent}%`    
     }
