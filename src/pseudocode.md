@@ -167,4 +167,5 @@ Would you like help structuring how to wire this into your current domHandler me
 --Questions to figure out--
 
 Transition for data to enter smoothly
+Error handling
 Minecraft backgrounds

@@ -6,6 +6,7 @@ export class domElements {
         this.form      = document.querySelector('#searchForm');
         this.metric    = document.querySelector('#metricBtn');
         this.imperial  = document.querySelector('#imperialBtn');
+        this.unitBox   = document.querySelector('.unit-box');
         this.tempUnit  = document.querySelector('.temp-unit');
         this.feelsUnit = document.querySelector('.feelslike-unit');
         this.triggers  = [this.metric, this.imperial];
@@ -104,7 +105,8 @@ export class domHandler {
         input.addEventListener('keydown', async (event) => {
             if (event.key === 'Enter') {
                 event.preventDefault();
-                await this.processInput();   
+                await this.processInput();
+                this.removeEnableMessage();
             }
         });
     }
@@ -143,6 +145,16 @@ export class domHandler {
     }
 // UI rendering methods
 
+    removeEnableMessage () {
+        const metric   = this.elements.metric;
+        const imperial = this.elements.imperial;
+        const unitBox  = this.elements.unitBox;
+
+        if (metric.disabled === false || imperial.disabled === false) {
+            unitBox.classList.add('hide-tooltip');
+        }
+    }
+
     showErrorMessage (message) {
         const errorText = this.elements.errorText;
         const errorBox  = this.elements.errorBox;
@@ -174,13 +186,13 @@ export class domHandler {
         if (unitGroup === 'metric') {
             tempUnit.textContent   = ' \u00B0C';
             feeslsUnit.textContent = ' \u00B0C';
-            windVal.textContent    =`${windVal.textContent} km`;
+            windVal.textContent    =`${windVal.textContent}km`;
         } else {
             tempUnit.textContent   = ' \u00B0F';
             feeslsUnit.textContent = ' \u00B0F';
-            windVal.textContent    =`${windVal.textContent} mi`;
+            windVal.textContent    =`${windVal.textContent}mi`;
         }
-        humidityVal.textContent = `${humidityVal.textContent}%`    
+        humidityVal.textContent = `${humidityVal.textContent}%`
     }
 
     populateElements () {

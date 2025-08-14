@@ -204,6 +204,10 @@ span {
     opacity: 1;
 }
 
+.unit-box.hide-tooltip::after {
+    display: none;
+}
+
 .metric,
 .imperial {
     font: 1rem 'mojang';
@@ -245,8 +249,9 @@ span {
 
 .error-box {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     padding-top: 10px;
+    padding-left: 2px;
 }
 
 .error-text {
