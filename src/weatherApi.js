@@ -7,13 +7,17 @@ export class apiScript {
     }
 
     async fetchData (location, unit) {
+        let response;
         try {
             const apiKey    = this.apiKey;
             const baseUrl   = this.baseUrl;
             const unitGroup = `unitGroup=${unit}`;
             const url       = `${baseUrl}${location}?${unitGroup}&key=${apiKey}`;
     
-            const response   = await fetch(url);
+            response  = await fetch(url);
+            if (!response.ok) {
+                return { success: false, status: response.status }
+            }
             const data       = await response.json();
             const validation = this.validateData(data);
             
@@ -21,10 +25,15 @@ export class apiScript {
                 console.log(data);
                 this.rawData = data;
                 return true;;
+            } else {
+                return { success: false, status: response.status }
             }
         } catch (error) {
             console.log(error)
-            return false;
+            return {
+                success: false,
+                status: response?.status ?? 'NETWORK_ERROR'
+            };
         }
     }
 //validation methods

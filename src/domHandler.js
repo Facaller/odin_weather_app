@@ -52,7 +52,12 @@ export class domHandler {
             this.elements.triggers,
             () => this.weatherAPI.fetchData(this.lastLocation, this.unitGroup)
         );
-        if (!callAPI) return;
+
+        if (callAPI?.success === false) {
+            const message = this.mapStatusCode(callAPI.status);
+            this.showErrorMessage(message);
+            return;
+        };
 
         this.weatherData = this.weatherAPI.getWeatherData();
         this.populateElements();
@@ -95,6 +100,19 @@ export class domHandler {
         } else {
             metric.disabled = false;
             imperial.disabled = false;
+        }
+    }
+
+    mapStatusCode(statusCode) {
+        switch (statusCode) {
+            case 400:
+                return 'Invalid location';
+            case 404:
+                return 'Data not found';
+            case 500:
+                return 'Server error';
+            default:
+                return 'An unexpected error occurred';
         }
     }
 
