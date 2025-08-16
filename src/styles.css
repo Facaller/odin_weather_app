@@ -95,7 +95,7 @@ span {
     grid-column: 1/2;
     display: flex;
     flex-direction: column;
-    row-gap: 45px;
+    row-gap: 10px;
     margin: 0px 0px 5% 10%;
 }
 
@@ -115,7 +115,7 @@ span {
     display: flex;
     position: relative;
     align-items: center;
-    margin-right: 30px;
+    margin-right: 25px;
 }
 
 .temperature {
