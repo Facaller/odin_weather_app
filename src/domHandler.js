@@ -20,6 +20,17 @@ export class domElements {
     }
 }
 
+export class domImages {
+    constructor () {
+        this.clear  = ['./assets/images/minecraft_backgrounds/clear1.mp4', 'src/assets/images/minecraft_backgrounds/clear2.mp4'];
+        this.cloudy = ['./assets/images/minecraft_backgrounds/cloudy1.mp4', 'src/assets/images/minecraft_backgrounds/cloudy2.mp4', 'src/assets/images/minecraft_backgrounds/cloudy3.mp4'];
+        this.fog    = ['./assets/images/minecraft_backgrounds/fog1.mp4'];
+        this.rain   = ['./assets/images/minecraft_backgrounds/rain1.mp4', 'src/assets/images/minecraft_backgrounds/rain2.mp4', 'src/assets/images/minecraft_backgrounds/rain3.mp4'];
+        this.snow   = ['./assets/images/minecraft_backgrounds/snow1.mp4', 'src/assets/images/minecraft_backgrounds/snow2.mp4'];
+        this.storm  = ['./assets/images/minecraft_backgrounds/storm1.mp4'];
+    }
+}
+
 export class domHandler {
     constructor (weatherAPI) {
         this.weatherAPI   = weatherAPI;
