@@ -102,16 +102,69 @@ Trigger a DOM update right after weather data is rendered ✅
 
 ************
 
---Questions to figure out--
+getCondition(conditionString) {
+  const condition = conditionString.toLowerCase();
+  for (const [type, data] of Object.entries(this.conditionMap)) {
+    if (data.keywords.some(keyword => condition.includes(keyword.toLowerCase()))) {
+      return type;
+    }
+  }
+  return 'default'; // fallback if nothing matches
+}
 
-Transition for data to enter smoothly
-Error handling
-Minecraft backgrounds
-- Sunny → Plains or Desert ✅ 
-- Cloudy → Taiga or Forest ✅ 
-- Rain → Forest during rain ✅ 
-- Thunderstorm → Plains at night with lightning
-- Snow → Snowy Tundra ✅ 
-- Fog → Swamp with shaders ✅ (same image)
-- Haze → Desert with a sepia filter ✅ (same image)
+After I get the returned type, I can change the video URL to match the type
+
+☀️ Clear
+type_43 – Clear
+type_29 – Sky Unchanged
+
+🌤 Cloudy
+type_41 – Overcast
+type_42 – Partially cloudy
+type_27 – Sky Coverage Decreasing
+type_28 – Sky Coverage Increasing
+🌫 Fog
+type_8 – Fog
+type_12 – Freezing Fog
+type_19 – Mist
+type_30 – Smoke Or Haze
+🌧 Rain
+type_2 – Drizzle
+type_3 – Heavy Drizzle
+type_4 – Light Drizzle
+type_5 – Heavy Drizzle/Rain
+type_6 – Light Drizzle/Rain
+type_21 – Rain
+type_24 – Rain Showers
+type_25 – Heavy Rain
+type_26 – Light Rain
+type_9 – Freezing Drizzle/Freezing Rain
+type_10 – Heavy Freezing Drizzle/Freezing Rain
+type_11 – Light Freezing Drizzle/Freezing Rain
+type_13 – Heavy Freezing Rain
+type_14 – Light Freezing Rain
+⛈ Storm
+type_15 – Funnel Cloud/Tornado
+type_36 – Squalls
+type_37 – Thunderstorm
+type_38 – Thunderstorm Without Precipitation
+type_18 – Lightning Without Thunder
+❄️ Snow
+type_1 – Blowing Or Drifting Snow
+type_17 – Ice
+type_22 – Heavy Rain And Snow
+type_23 – Light Rain And Snow
+type_31 – Snow
+type_32 – Snow And Rain Showers
+type_33 – Snow Showers
+type_34 – Heavy Snow
+type_35 – Light Snow
+type_39 – Diamond Dust
+🌨 Hail
+type_16 – Hail Showers
+type_40 – Hail
+🌪 Other (Optional or Fallback)
+type_7 – Dust storm
+type_20 – Precipitation In Vicinity (use as fallback if no specific match)
+You can collapse Hail and Other into Storm or Rain if you want to stick strictly to 8 groups, depending on how nuanced you want the visuals to be.
 
