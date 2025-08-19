@@ -31,15 +31,21 @@ export class imageUtil {
 //and data processing logic to account for the number_type values
 // (which would need to be mapped anew + in the UI)
 // So, this is a quick and dirty solution.
-    getCondition (condition) {
-        condition = condition.toLowerCase();
-        if (condition.includes() || condition.includes() || condition.includes()) {return ''};
-        if (condition.includes() || condition.includes() || condition.includes()) {return ''};
-        if (condition.includes() || condition.includes() || condition.includes()) {return ''};
-        if (condition.includes() || condition.includes() || condition.includes()) {return ''};
-        if (condition.includes() || condition.includes() || condition.includes()) {return ''};
-        if (condition.includes() || condition.includes() || condition.includes()) {return ''};
-        if (condition.includes() || condition.includes() || condition.includes()) {return ''};
-        if (condition.includes() || condition.includes() || condition.includes()) {return ''};
+    matchCondition(conditionString) {
+        const condition = conditionString.toLowerCase();
+        for (const [type, data] of Object.entries(this.conditionMap)) {
+            if (data.keywords.some(keyword => condition.includes(keyword))) {
+                return type;
+            }
+        }
+        return 'default';
+    }
+
+    getRandomVideo (conditionType) {
+        if (conditionType) {
+            const videoArray = this.conditionMap[conditionType].videos;
+            const randomIndex = Math.floor(Math.random() * videoArray.length);
+            return videoArray[randomIndex];
+        }
     }
 }
