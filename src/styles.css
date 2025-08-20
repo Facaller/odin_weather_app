@@ -23,8 +23,10 @@
 }
 
 html, body {
+    position: relative;
     height: 100%;
     width: 100%;
+    overflow: hidden;
 }
 
 input {
@@ -37,7 +39,8 @@ input {
     color: white;
     background-color: rgba(60, 60, 60, 0.6);
     outline: none;
-    transition: transform 0.2s ease
+    transition: transform 0.2s ease;
+    
 }
 
 input:hover {
@@ -81,6 +84,16 @@ p {
 
 span {
     font-family: 'mojang-bold';
+}
+
+.video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
 }
 /* data container */
 .container {

@@ -2,6 +2,7 @@ import { imageUtil } from "./backgroundUtil";
 
 export class domElements {
     constructor () {
+        this.video     = document.querySelector('.video');
         this.errorBox  = document.querySelector('.error-box');
         this.errorText = document.querySelector('.error-text');
         this.input     = document.querySelector('#search');        
@@ -28,6 +29,7 @@ export class domHandler {
         this.elements     = new domElements();
         this.images       = new imageUtil();
         this.weatherData  = {};
+        this.weatherType  = ''
         this.lastLocation = '';
         this.unitGroup    = 'metric';
 
@@ -117,6 +119,20 @@ export class domHandler {
             default:
                 return 'An unexpected error occurred';
         }
+    }
+
+    updateBackground () {
+        if (!this.weatherData.conditions) return;
+
+        const videoElement    = this.elements.video;
+        const conditionString = this.weatherData.conditions;
+        const conditionType   = this.images.matchCondition(conditionString);
+
+        if (this.weatherType === conditionType) return;
+
+        this.weatherType = conditionType;
+        const videoUrl = this.images.getRandomVideo(conditionType);
+        videoElement.src = videoUrl;
     }
 
 // Event handlers
@@ -233,5 +249,6 @@ export class domHandler {
         this.updateElement(feelsLikeVal, data.feelslike);
         this.updateElement(windVal, data.wind);
         this.updateElement(humidityVal, data.humidity);
+        this.updateBackground();
     }
 }
