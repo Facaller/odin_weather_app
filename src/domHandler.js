@@ -133,6 +133,10 @@ export class domHandler {
         this.weatherType = conditionType;
         const videoUrl = this.images.getRandomVideo(conditionType);
         videoElement.src = videoUrl;
+        
+        videoElement.muted = true;
+        videoElement.load();
+        videoElement.play();
     }
 
 // Event handlers
