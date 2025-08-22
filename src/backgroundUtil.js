@@ -3,15 +3,15 @@ export class imageUtil {
         this.conditionMap = {
             clear: {
                 keywords: ['clear', 'sky unchanged'],
-                videos: ['/assets/minecraft_backgrounds/clear1.mp4', '/assets/minecraft_backgrounds/clear2.mp4']
+                videos: ['/assets/minecraft_backgrounds/clear1.mp4', '/assets/minecraft_backgrounds/clear2.mp4', '/assets/minecraft_backgrounds/clear3.mp4', '/assets/minecraft_backgrounds/clear4.mp4']
             },
             cloudy: {
                 keywords: ['overcast', 'partially cloudy', 'sky coverage decreasing', 'sky coverage increasing'],
-                videos: ['/assets/minecraft_backgrounds/cloudy1.mp4', '/assets/minecraft_backgrounds/cloudy2.mp4', '/assets/minecraft_backgrounds/cloudy3.mp4']
+                videos: ['/assets/minecraft_backgrounds/cloudy1.mp4', '/assets/minecraft_backgrounds/cloudy2.mp4', '/assets/minecraft_backgrounds/cloudy3.mp4', '/assets/minecraft_backgrounds/cloudy4.mp4', 'public/assets/minecraft_backgrounds/cloudy5.mp4']
             },
             fog: {
                 keywords: ['fog', 'freezing fog', 'mist', 'smoke or haze'],
-                videos: ['/assets/minecraft_backgrounds/fog1.mp4']
+                videos: ['/assets/minecraft_backgrounds/fog1.mp4', '/assets/minecraft_backgrounds/fog2.mp4']
             },
             rain: {
                 keywords: ['drizzle', 'heavy drizzle', 'light drizzle', 'heavy drizzle/rain', 'light drizzle/rain', 'rain', 'rain showers', 'heavy rain', 'light rain', 'freezing drizzle/freezing rain', 'heavy freezing drizzle/freezing rain', 'light freezing drizzle/freezing rain', 'heavy freezing rain', 'light freezing rain', 'hail showers', 'hail', 'dust storm', 'precipitation in vicinity'],
@@ -23,12 +23,16 @@ export class imageUtil {
             },
             storm: {
                 keywords: ['funnel cloud/tornado', 'squalls', 'thunderstorm', 'thunderstorm without precipitation', 'lightning without thunder'],
-                videos: ['/assets/minecraft_backgrounds/storm1.mp4']
+                videos: ['/assets/minecraft_backgrounds/storm1.mp4', '/assets/minecraft_backgrounds/storm2.mp4']
             },
+            default: {
+                keywords: [],
+                videos: ['/assets/minecraft_backgrounds/default1.mp4']
+            }
         }
     }
 //Not pretty, I know, but didn't think it was worth it to change my fetch method
-//and data processing logic to account for the number_type values
+//and data processing logic to account for the number_type values of the weather conditions
 // (which would need to be mapped anew + in the UI)
 // So, this is a quick and dirty solution.
     matchCondition(conditionString) {
