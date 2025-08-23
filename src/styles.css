@@ -278,8 +278,10 @@ span {
 }
 
 .error-text {
+    padding-top: 5px;
     word-spacing: 3px;
     letter-spacing: .2px;
+    color: white;
 }
 
 .hidden {

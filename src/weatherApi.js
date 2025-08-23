@@ -22,14 +22,12 @@ export class apiScript {
             const validation = this.validateData(data);
             
             if (validation) {
-                console.log(data);
                 this.rawData = data;
                 return true;;
             } else {
                 return { success: false, status: response.status }
             }
         } catch (error) {
-            console.log(error)
             return {
                 success: false,
                 status: response?.status ?? 'NETWORK_ERROR'
